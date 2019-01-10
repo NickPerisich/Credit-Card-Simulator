@@ -18,18 +18,27 @@ class PayScreen extends StatelessWidget {
 }
 
 Widget amountOwedCard() {
+  int balance = 100;
+  int amountOwed = 5;
   return new Card(
     child: Column(
         children: <Widget>[
-          const ListTile(
+          ListTile(
           leading: Icon(Icons.payment),
-          title: Text('You owe'),
+          // ignore: const_eval_throws_exception
+          title: Text("You owe $amountOwed dollars and your balance is $balance", style: TextStyle(fontSize: 24),),
           //subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
         ),
+          FlatButton(onPressed: () => balance - amountOwed, child: const Text("Pay your balance"))
+
         ],
+
     ),
   );
+
 }
+
+//int balance = 1300;
 
 Widget widgetList() {
   return new Padding(
