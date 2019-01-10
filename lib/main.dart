@@ -40,6 +40,50 @@ class FrontPageState extends State<FrontPage> {
         )
     );
   }
+
+  //The logo seen
+  Widget logo() {
+    return Column(children: [
+
+    ]);
+
+  }
+
+  //The whole level status area, including the pokemon-go style bar and emoji and balance due date
+  Widget levelStatus() {
+    return Column(children: [
+
+    ]);
+
+  }
+
+  //The user information, including available cash, payment due, and paycheck due
+  Widget userCashInfo() {
+    return Column(children: [
+
+    ]);
+  }
+
+
+  //The payment button
+  Widget payButton() {
+    return Column(children: [
+
+    ]);
+  }
+
+  Widget creditBar() {
+     return new Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+          child: LinearProgressIndicator(
+            value: 0.3,
+            backgroundColor: Colors.red,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+          ),
+        ),
+      );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,10 +96,9 @@ class FrontPageState extends State<FrontPage> {
   }
 
   Widget widgetList() {
-    return ListView ( 
-      children: [   
-        //INSERT PARENT WIDGETS HERE
-      ]);
+    return ListView (
+      children: [logo(), levelStatus(), creditBar(), userCashInfo(), payButton()]
+    );
   }
 
 }
