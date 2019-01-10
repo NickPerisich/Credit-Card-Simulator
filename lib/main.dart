@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'PayScreen.dart';
 import 'ParentSettingScreen.dart';
+import 'dart:async';
+import 'dart:io' show Platform;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+final databaseReference = FirebaseDatabase.instance.reference();
+final userReference = databaseReference.child('0');
 
 void main() => runApp(MyApp());
 final GlobalKey<AnimatedCircularChartState> _chartKey = new GlobalKey<AnimatedCircularChartState>();
@@ -22,6 +29,18 @@ class FrontPage extends StatefulWidget {
 }
 
 class FrontPageState extends State<FrontPage> {
+  int cash;
+  StreamSubscription<Event> _onCashChangedSubscription;
+  @override void initState() {
+    super.initState();
+    _onCashChangedSubscription = userReference.child('cash').onValue.listen((Event event) {
+      setState(() {
+        print("TEST");
+        cash = event.snapshot.value as int;
+      });
+    });
+  }
+
   Widget hamburger() {
     return new Drawer(
         child: new ListView(
@@ -129,7 +148,7 @@ class FrontPageState extends State<FrontPage> {
             alignment: Alignment.centerLeft,
             child: Container(
               child: Text(
-                "Available Cash: ",
+                "Available Cash: \$$cash",
                 style: TextStyle(
                   fontSize: fontSize,
                 ),

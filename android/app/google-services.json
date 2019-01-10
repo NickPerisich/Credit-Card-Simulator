@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "242797025200",
+    "firebase_url": "https://kapitalkids-8b316.firebaseio.com",
+    "project_id": "kapitalkids-8b316",
+    "storage_bucket": "kapitalkids-8b316.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242797025200:android:df22ebedafef81e5",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242797025200-cmko9b72t48bhat032ilu7ob6i9gmksi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUvhFQitezVB0wxXAsLZtm3BSGrjFK0No"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
