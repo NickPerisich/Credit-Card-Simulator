@@ -19,12 +19,34 @@ class FrontPage extends StatefulWidget {
 
 class FrontPageState extends State<FrontPage> {
 
+  Widget hamburger() {
+    return new Drawer(
+        child: new ListView(
+          children: <Widget> [
+            new DrawerHeader(child: new Text('Header'),),
+            new ListTile(
+              title: new Text('Log Out'),
+              onTap: () {},
+            ),
+            new ListTile(
+              title: new Text('Parental Settings'),
+              onTap: () {},
+            ),
+            new ListTile(
+              title: new Text('Educate Me'),
+              onTap: () {},
+            ),
+          ],
+        )
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('KapitalKidz'),
       ),
+      drawer: hamburger(),
       body: widgetList(),
     );
   }
