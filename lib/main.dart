@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
 void main() => runApp(MyApp());
+final GlobalKey<AnimatedCircularChartState> _chartKey = new GlobalKey<AnimatedCircularChartState>();
 
 class MyApp extends StatelessWidget {
   @override
@@ -43,42 +45,114 @@ class FrontPageState extends State<FrontPage> {
 
   //The logo seen
   Widget logo() {
-    return Column(children: []);
+    return Container(
+        child: Image.asset('images/kkidz.png'),
+    // ...
+    );
   }
 
+
+  Widget createCircularChart()
+  {
+    return new AnimatedCircularChart(
+      key: _chartKey,
+      size: Size(200, 200),
+      initialChartData: <CircularStackEntry>[
+        new CircularStackEntry(
+          <CircularSegmentEntry>[
+            new CircularSegmentEntry(
+              33.33,
+              Colors.lightGreen[400],
+              rankKey: 'completed',
+            ),
+            new CircularSegmentEntry(
+              66.67,
+              Colors.grey[600],
+              rankKey: 'remaining',
+            ),
+          ],
+          rankKey: 'progress',
+        ),
+      ],
+      chartType: CircularChartType.Radial,
+      percentageValues: true,
+      holeLabel: 'Level 5',
+      labelStyle: new TextStyle(
+      color: Colors.blueGrey[600],
+      fontWeight: FontWeight.bold,
+        fontSize: 30.0,
+      )
+    );
+  }
+
+  Widget createEmoji(int _level)
+  {
+    return new Container(
+      width: 100.0,
+      height: 100.0,
+      alignment: Alignment.center,
+      decoration: new BoxDecoration(
+
+        image: DecorationImage(
+            image: AssetImage('images/em5.png'),
+            fit: BoxFit.fill
+        ),
+      ),
+    );
+  }
+  
   //The whole level status area, including the pokemon-go style bar and emoji and balance due date
   Widget levelStatus() {
-    return Column(children: []);
+    return Row(children: [
+      createCircularChart(),
+      createEmoji(5)
+    ]);
   }
 
   //The user information, including available cash, payment due, and paycheck due
+
   Widget userCashInfo() {
-    return Column(children: [
-      Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          child: Text(
-            "Available Cash: ",
+    double fontSize = 18;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Text(
+                "Available Cash: ",
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-      Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          child: Text(
-            "Payment Due: ",
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Text(
+                "Payment Due: ",
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-      Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-          child: Text(
-            "Paycheck: ",
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Text(
+                "Paycheck: ",
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+              ),
+            ),
           ),
-        ),
+        ]),
       ),
-    ]);
+    );
   }
 
   //The payment button
@@ -111,14 +185,16 @@ class FrontPageState extends State<FrontPage> {
       appBar: AppBar(
         title: Text('KapitalKidz'),
       ),
+
       drawer: hamburger(),
       body: widgetList(),
     );
   }
 
+
   Widget widgetList() {
     return new Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: ListView(children: [
           logo(),
           levelStatus(),
@@ -127,6 +203,7 @@ class FrontPageState extends State<FrontPage> {
           payButton()
         ]));
   }
+
 }
 
 class PayScreen extends StatelessWidget {
