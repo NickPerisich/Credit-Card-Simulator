@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'PayScreen.dart';
+import 'ParentSettingScreen.dart';
 
 void main() => runApp(MyApp());
 final GlobalKey<AnimatedCircularChartState> _chartKey = new GlobalKey<AnimatedCircularChartState>();
@@ -33,7 +35,13 @@ class FrontPageState extends State<FrontPage> {
         ),
         new ListTile(
           title: new Text('Parental Settings'),
-          onTap: () {},
+          onTap: () {
+            // Navigate to second screen when tapped!
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ParentSettingsScreen()),
+            );
+          },
         ),
         new ListTile(
           title: new Text('Educate Me'),
@@ -100,7 +108,7 @@ class FrontPageState extends State<FrontPage> {
       ),
     );
   }
-  
+
   //The whole level status area, including the pokemon-go style bar and emoji and balance due date
   Widget levelStatus() {
     return Row(children: [
@@ -204,16 +212,4 @@ class FrontPageState extends State<FrontPage> {
         ]));
   }
 
-}
-
-class PayScreen extends StatelessWidget {
-  @override
-  Widget build (BuildContext ctxt) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Pay Screen"),
-      ),
-      body: new Text("Another Page...!!!!!!"),
-    );
-  }
 }
