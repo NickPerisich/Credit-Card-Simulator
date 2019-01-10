@@ -157,7 +157,16 @@ class FrontPageState extends State<FrontPage> {
 
   //The payment button
   Widget payButton() {
-    return Column(children: []);
+    return new RaisedButton (
+      child: Text('Pay'),
+      onPressed: () {
+        // Navigate to second screen when tapped!
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PayScreen()),
+        );
+      },
+    );
   }
 
   Widget creditBar() {
@@ -197,8 +206,14 @@ class FrontPageState extends State<FrontPage> {
 
 }
 
-
-
-
-
-
+class PayScreen extends StatelessWidget {
+  @override
+  Widget build (BuildContext ctxt) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Pay Screen"),
+      ),
+      body: new Text("Another Page...!!!!!!"),
+    );
+  }
+}
