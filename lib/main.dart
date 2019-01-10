@@ -31,11 +31,11 @@ class FrontPage extends StatefulWidget {
 class FrontPageState extends State<FrontPage> {
   int cash;
   StreamSubscription<Event> _onCashChangedSubscription;
+
   @override void initState() {
     super.initState();
     _onCashChangedSubscription = userReference.child('cash').onValue.listen((Event event) {
       setState(() {
-        print("TEST");
         cash = event.snapshot.value as int;
       });
     });
