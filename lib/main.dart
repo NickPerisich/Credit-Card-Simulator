@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'PayScreen.dart';
+import 'ParentSettingScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,7 +33,13 @@ class FrontPageState extends State<FrontPage> {
         ),
         new ListTile(
           title: new Text('Parental Settings'),
-          onTap: () {},
+          onTap: () {
+            // Navigate to second screen when tapped!
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ParentSettingsScreen()),
+            );
+          },
         ),
         new ListTile(
           title: new Text('Educate Me'),
@@ -129,14 +137,3 @@ class FrontPageState extends State<FrontPage> {
   }
 }
 
-class PayScreen extends StatelessWidget {
-  @override
-  Widget build (BuildContext ctxt) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Pay Screen"),
-      ),
-      body: new Text("Another Page...!!!!!!"),
-    );
-  }
-}
