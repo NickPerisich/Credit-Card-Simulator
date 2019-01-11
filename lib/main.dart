@@ -104,17 +104,21 @@ class FrontPageState extends State<FrontPage> {
     });
   }
 
-  Widget hamburger() {
+Widget hamburger() {
     return new Drawer(
         child: new ListView(
       children: <Widget>[
         new DrawerHeader(
-          child: new Text('Kapital Kidz'),
-        ),
-        /*
-        new ListTile(
-          title: new Text('Log Out'),
-          onTap: () {},
+          child: new Text(
+            'Capital One Allowance',
+            style: TextStyle(
+              fontStyle: FontStyle.normal,
+              color: Colors.white,
+            )
+          ),
+          decoration: BoxDecoration (
+            color: Colors.lightBlue,
+          ),
         ),
         new ListTile(
           title: new Text('Parental Settings'),
@@ -126,12 +130,15 @@ class FrontPageState extends State<FrontPage> {
             );
           },
         ),
-
         new ListTile(
-          title: new Text('Educate Me'),
-          onTap: () {},
+          title: new Text('Pay your Bill'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PayScreen()),
+            );
+          },
         ),
-        */
       ],
     ));
   }
@@ -227,7 +234,12 @@ class FrontPageState extends State<FrontPage> {
             alignment: Alignment.centerLeft,
             child: Container(
               child: Text(
-                "Payment Due: " + date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString(),
+                "Payment Due: " +
+                    date.month.toString() +
+                    "/" +
+                    date.day.toString() +
+                    "/" +
+                    date.year.toString(),
                 style: TextStyle(
                   fontSize: fontSize,
                 ),
@@ -271,7 +283,7 @@ class FrontPageState extends State<FrontPage> {
     return Column(children: [
       Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [new Text("\$0"), new Text("\$"+limit.toString())]),
+          children: [new Text("\$0"), new Text("\$" + limit.toString())]),
       LinearProgressIndicator(
         value: balance / limit,
         backgroundColor: Colors.green,
