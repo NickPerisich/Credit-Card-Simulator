@@ -250,7 +250,7 @@ class FrontPageState extends State<FrontPage> {
   Widget creditBar() {
     return Container(
       child: LinearProgressIndicator(
-        value: / limit,
+        value: balance / limit,
         backgroundColor: Colors.green,
         valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
       ),
