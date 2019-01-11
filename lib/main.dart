@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'Pres.dart';
 
 final databaseReference = FirebaseDatabase.instance.reference();
 final userReference = databaseReference.child('0');
@@ -138,6 +139,15 @@ Widget hamburger() {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PayScreen()),
+            );
+          },
+        ),
+        new ListTile(
+          title: new Text('pres'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Presentation()),
             );
           },
         ),
@@ -307,7 +317,7 @@ Widget hamburger() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('KapitalKidz'),
+        title: Text('Capital One Allowance'),
       ),
       drawer: hamburger(),
       body: widgetList(),
