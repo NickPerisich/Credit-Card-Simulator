@@ -80,6 +80,7 @@ class FrontPageState extends State<FrontPage> {
     userReference.child('current_exp').onValue.listen((Event event) {
       setState(() {
         currentExp = event.snapshot.value as int;
+        _chartKey.currentState.updateData(createChartData());
       });
     });
     userReference.child('level').onValue.listen((Event event) {
@@ -90,6 +91,7 @@ class FrontPageState extends State<FrontPage> {
     userReference.child('max_exp').onValue.listen((Event event) {
       setState(() {
         maxExp = event.snapshot.value as int;
+        _chartKey.currentState.updateData(createChartData());
       });
     });
     userReference.child('minimum_payment').onValue.listen((Event event) {
@@ -151,35 +153,35 @@ Widget hamburger() {
     );
   }
 
+  List<CircularStackEntry> createChartData() {
+    return [new CircularStackEntry(
+      <CircularSegmentEntry>[
+        new CircularSegmentEntry(
+          (currentExp / maxExp * 50),
+          Colors.lightGreen[400],
+          rankKey: 'completed',
+        ),
+        new CircularSegmentEntry(
+          50 - (currentExp / maxExp * 50),
+          Colors.grey[200],
+          rankKey: 'remaining',
+        ),
+      ],
+      rankKey: 'progress',
+    )];
+  }
+
   Widget createCircularChart() {
-    return new AnimatedCircularChart(
+    return RotatedBox(
+      quarterTurns: -1,
+      child: new AnimatedCircularChart(
         key: _chartKey,
-        size: Size(200, 200),
-        initialChartData: <CircularStackEntry>[
-          new CircularStackEntry(
-            <CircularSegmentEntry>[
-              new CircularSegmentEntry(
-                33.33,
-                Colors.lightGreen[400],
-                rankKey: 'completed',
-              ),
-              new CircularSegmentEntry(
-                66.67,
-                Colors.grey[600],
-                rankKey: 'remaining',
-              ),
-            ],
-            rankKey: 'progress',
-          ),
-        ],
+        size: Size(400, 400),
+        initialChartData: createChartData(),
         chartType: CircularChartType.Radial,
         percentageValues: true,
-        holeLabel: 'Level 5',
-        labelStyle: new TextStyle(
-          color: Colors.blueGrey[600],
-          fontWeight: FontWeight.bold,
-          fontSize: 30.0,
-        ));
+        edgeStyle: SegmentEdgeStyle.round
+    ));
   }
 
   Widget createEmoji(int _level) {
@@ -196,7 +198,16 @@ Widget hamburger() {
 
   //The whole level status area, including the pokemon-go style bar and emoji and balance due date
   Widget levelStatus() {
-    return Row(children: [createCircularChart(), createEmoji(5)]);
+    return new Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        createCircularChart(),
+        Positioned(
+          child: createEmoji(level),
+          top: 110
+        )
+      ],
+    );
   }
 
   //The user information, including available cash, payment due, and paycheck due
