@@ -59,8 +59,7 @@ class PayScreenState extends State<PayScreen> {
     );
   }
 
-  Widget amountOwedCard(cashBalance, creditAmount) {
-    //int balance = 100;
+  Widget amountOwedCard(cashBalance, creditAmount) { //int balance = 100;
     //int amountOwed = 5;
       return new Card(
         child: Column(

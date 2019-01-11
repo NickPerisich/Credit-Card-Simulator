@@ -107,6 +107,26 @@ class FrontPageState extends State<FrontPage> {
     });
   }
 
+  Future<void> levelUpDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('You just leveled up!'),
+          content: Image.asset('em7.png'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Continue'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 Widget hamburger() {
     return new Drawer(
         child: new ListView(
@@ -274,29 +294,19 @@ Widget hamburger() {
 
   //The payment button
   Widget payButton() {
-    return new RaisedButton(
-      child: Text('Pay'),
-      onPressed: () {
-        // Navigate to second screen when tapped!
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PayScreen()),
-        );
-      },
-    );
-  }
-
-  //The payment button
-  Widget parentButton() {
-    return new RaisedButton(
-      child: Text('Parental Controls'),
-      onPressed: () {
-        // Navigate to second screen when tapped!
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ParentSettingsScreen()),
-        );
-      },
+    return new Padding(
+      padding: EdgeInsets.all(16),
+      child: RaisedButton (
+        child: Text('Pay', style: TextStyle(fontSize: 20),),
+        onPressed: () {
+          // Navigate to second screen when tapped!
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PayScreen()),
+          );
+        },
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+      ),
     );
   }
 
@@ -305,14 +315,85 @@ Widget hamburger() {
       Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [new Text("\$0"), new Text("\$" + limit.toString())]),
-      LinearProgressIndicator(
-        value: balance / limit,
-        backgroundColor: Colors.green,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+      SizedBox(
+        height: 20,
+        child: LinearProgressIndicator(
+          value: balance / limit,
+          backgroundColor: Colors.green,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+        ),
       ),
     ]);
   }
 
+  Widget amountSpent() {
+    return new Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+              leading: Icon(Icons.payment),
+              // ignore: const_eval_throws_exception
+              title: Padding(
+                padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
+                child: Text(
+                  "Amount spent: \$$balance",
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+              )
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget availableCash() {
+    return new Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+              leading: Icon(Icons.attach_money),
+              // ignore: const_eval_throws_exception
+              title: Padding(
+                padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
+                child: Text(
+                  "Available cash: \$$cash",
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+              )
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget paymentDueDate() {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(paymentDue);
+    return new Card(
+      child: Column(
+        children: <Widget>[
+          ListTile(
+              leading: Icon(Icons.calendar_today),
+              // ignore: const_eval_throws_exception
+              title: Padding(
+                padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
+                child: Text(
+                  "Payment Due: " +
+                      date.month.toString() +
+                      "/" +
+                      date.day.toString() +
+                      "/" +
+                      date.year.toString(),
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
+                ),
+              )
+          ),
+        ],
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -326,14 +407,15 @@ Widget hamburger() {
 
   Widget widgetList() {
     return new Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 8, right: 8),
         child: ListView(children: [
           logo(),
           levelStatus(),
           creditBar(),
-          userCashInfo(),
+          amountSpent(),
+          availableCash(),
+          paymentDueDate(),
           payButton(),
-          parentButton()
         ]));
   }
 }
