@@ -11,8 +11,8 @@ final databaseReference = FirebaseDatabase.instance.reference();
 final userReference = databaseReference.child('0');
 
 int cash;
-int paymentDue;
-int balance;
+int paymentDue = 0;
+int balance = 0;
 int currentExp;
 int level;
 int maxExp;
@@ -20,7 +20,7 @@ int minPayment;
 String name;
 int parentalPasscode;
 int allowanceAmount;
-int limit;
+int limit = 1;
 
 void main() => runApp(MyApp());
 final GlobalKey<AnimatedCircularChartState> _chartKey =
@@ -45,11 +45,6 @@ class FrontPageState extends State<FrontPage> {
   @override
   void initState() {
     super.initState();
-    userReference.child('parental-asscode').onValue.listen((Event event) {
-      setState(() {
-        parentalPasscode = event.snapshot.value as int;
-      });
-    });
     userReference.child('parental-passcode').onValue.listen((Event event) {
       setState(() {
         parentalPasscode = event.snapshot.value as int;
@@ -68,6 +63,7 @@ class FrontPageState extends State<FrontPage> {
     userReference.child('payment_due').onValue.listen((Event event) {
       setState(() {
         paymentDue = event.snapshot.value as int;
+        paymentDue = paymentDue * 1000;
       });
     });
     userReference.child('balance').onValue.listen((Event event) {
@@ -191,10 +187,22 @@ class FrontPageState extends State<FrontPage> {
 
   Widget userCashInfo() {
     double fontSize = 18;
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(paymentDue);
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              child: Text(
+                "Amount Spent: \$$balance",
+                style: TextStyle(
+                  fontSize: fontSize,
+                ),
+              ),
+            ),
+          ),
           Align(
             alignment: Alignment.centerLeft,
             child: Container(
@@ -210,18 +218,7 @@ class FrontPageState extends State<FrontPage> {
             alignment: Alignment.centerLeft,
             child: Container(
               child: Text(
-                "Payment Due: $paymentDue",
-                style: TextStyle(
-                  fontSize: fontSize,
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              child: Text(
-                "Amount Spent: \$$balance",
+                "Payment Due: " + date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString(),
                 style: TextStyle(
                   fontSize: fontSize,
                 ),
@@ -248,13 +245,16 @@ class FrontPageState extends State<FrontPage> {
   }
 
   Widget creditBar() {
-    return Container(
-      child: LinearProgressIndicator(
+    return Column(children: [
+      Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [new Text("\$0"), new Text("\$"+limit.toString())]),
+      LinearProgressIndicator(
         value: balance / limit,
         backgroundColor: Colors.green,
         valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
       ),
-    );
+    ]);
   }
 
   @override

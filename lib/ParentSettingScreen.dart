@@ -11,7 +11,6 @@ class ParentSettingsScreen extends StatelessWidget {
 
   @override
   Widget build (BuildContext ctxt) {
-    print(cash);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Parent Settings Screen"),
