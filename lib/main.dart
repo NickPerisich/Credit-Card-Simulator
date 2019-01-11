@@ -82,6 +82,11 @@ class FrontPageState extends State<FrontPage> {
       setState(() {
         currentExp = event.snapshot.value as int;
         _chartKey.currentState.updateData(createChartData());
+        if(currentExp >= maxExp) {
+          userReference.child('level').set(level+1);
+          userReference.child('current_exp').set(currentExp - maxExp);
+          levelUpDialog();
+        }
       });
     });
     userReference.child('level').onValue.listen((Event event) {
@@ -113,7 +118,7 @@ class FrontPageState extends State<FrontPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('You just leveled up!'),
-          content: Image.asset('em7.png'),
+          content: Image.asset('images/em$level.png'),
           actions: <Widget>[
             FlatButton(
               child: Text('Continue'),
@@ -215,7 +220,7 @@ Widget hamburger() {
       alignment: Alignment.center,
       decoration: new BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('images/em5.png'), fit: BoxFit.fill),
+            image: AssetImage('images/em$level.png'), fit: BoxFit.fill),
       ),
     );
   }

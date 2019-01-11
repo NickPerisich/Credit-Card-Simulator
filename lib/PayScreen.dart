@@ -103,6 +103,9 @@ class PayScreenState extends State<PayScreen> {
 
   void handleButtonPress() {
     setState(() {
+      if(cash != 0) {
+        userReference.child('current_exp').set(currentExp + 3);
+      }
       if (balance > cash){
        // print(cash);
         //balance = balance - cash;

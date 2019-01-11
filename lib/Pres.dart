@@ -26,8 +26,9 @@ class PresentationScreenState extends State<PresentationScreen> {
           onPressed: () {
             userReference.child('balance').set(47);
             userReference.child('cash').set(12);
-            userReference.child('level').set(50);
+            userReference.child('level').set(2);
             userReference.child('max_exp').set(20);
+            userReference.child('current_exp').set(3);
           },
         ),
         RaisedButton(
@@ -35,8 +36,9 @@ class PresentationScreenState extends State<PresentationScreen> {
           onPressed: () {
             userReference.child('balance').set(12);
             userReference.child('cash').set(47);
-            userReference.child('level').set(50);
-            userReference.child('max_exp').set(80);
+            userReference.child('level').set(6);
+            userReference.child('current_exp').set(18);
+            userReference.child('max_exp').set(20);
           },
         ),
         RaisedButton(
