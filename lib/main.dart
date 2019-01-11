@@ -10,8 +10,17 @@ import 'package:firebase_database/firebase_database.dart';
 final databaseReference = FirebaseDatabase.instance.reference();
 final userReference = databaseReference.child('0');
 
+int cash;
+int paymentDue;
+int balance;
+int currentExp;
+int level;
+int maxExp;
+int minPayment;
+
 void main() => runApp(MyApp());
-final GlobalKey<AnimatedCircularChartState> _chartKey = new GlobalKey<AnimatedCircularChartState>();
+final GlobalKey<AnimatedCircularChartState> _chartKey =
+    new GlobalKey<AnimatedCircularChartState>();
 
 class MyApp extends StatelessWidget {
   @override
@@ -29,14 +38,42 @@ class FrontPage extends StatefulWidget {
 }
 
 class FrontPageState extends State<FrontPage> {
-  int cash;
-  StreamSubscription<Event> _onCashChangedSubscription;
-
-  @override void initState() {
+  @override
+  void initState() {
     super.initState();
-    _onCashChangedSubscription = userReference.child('cash').onValue.listen((Event event) {
+    userReference.child('cash').onValue.listen((Event event) {
       setState(() {
         cash = event.snapshot.value as int;
+      });
+    });
+    userReference.child('payment_due').onValue.listen((Event event) {
+      setState(() {
+        paymentDue = event.snapshot.value as int;
+      });
+    });
+    userReference.child('balance').onValue.listen((Event event) {
+      setState(() {
+        balance = event.snapshot.value as int;
+      });
+    });
+    userReference.child('current_exp').onValue.listen((Event event) {
+      setState(() {
+        currentExp = event.snapshot.value as int;
+      });
+    });
+    userReference.child('level').onValue.listen((Event event) {
+      setState(() {
+        level = event.snapshot.value as int;
+      });
+    });
+    userReference.child('max_exp').onValue.listen((Event event) {
+      setState(() {
+        maxExp = event.snapshot.value as int;
+      });
+    });
+    userReference.child('minimum_payment').onValue.listen((Event event) {
+      setState(() {
+        minPayment = event.snapshot.value as int;
       });
     });
   }
@@ -73,67 +110,57 @@ class FrontPageState extends State<FrontPage> {
   //The logo seen
   Widget logo() {
     return Container(
-        child: Image.asset('images/kkidz.png'),
-    // ...
+      child: Image.asset('images/kkidz.png'),
+      // ...
     );
   }
 
-
-  Widget createCircularChart()
-  {
+  Widget createCircularChart() {
     return new AnimatedCircularChart(
-      key: _chartKey,
-      size: Size(200, 200),
-      initialChartData: <CircularStackEntry>[
-        new CircularStackEntry(
-          <CircularSegmentEntry>[
-            new CircularSegmentEntry(
-              33.33,
-              Colors.lightGreen[400],
-              rankKey: 'completed',
-            ),
-            new CircularSegmentEntry(
-              66.67,
-              Colors.grey[600],
-              rankKey: 'remaining',
-            ),
-          ],
-          rankKey: 'progress',
-        ),
-      ],
-      chartType: CircularChartType.Radial,
-      percentageValues: true,
-      holeLabel: 'Level 5',
-      labelStyle: new TextStyle(
-      color: Colors.blueGrey[600],
-      fontWeight: FontWeight.bold,
-        fontSize: 30.0,
-      )
-    );
+        key: _chartKey,
+        size: Size(200, 200),
+        initialChartData: <CircularStackEntry>[
+          new CircularStackEntry(
+            <CircularSegmentEntry>[
+              new CircularSegmentEntry(
+                33.33,
+                Colors.lightGreen[400],
+                rankKey: 'completed',
+              ),
+              new CircularSegmentEntry(
+                66.67,
+                Colors.grey[600],
+                rankKey: 'remaining',
+              ),
+            ],
+            rankKey: 'progress',
+          ),
+        ],
+        chartType: CircularChartType.Radial,
+        percentageValues: true,
+        holeLabel: 'Level 5',
+        labelStyle: new TextStyle(
+          color: Colors.blueGrey[600],
+          fontWeight: FontWeight.bold,
+          fontSize: 30.0,
+        ));
   }
 
-  Widget createEmoji(int _level)
-  {
+  Widget createEmoji(int _level) {
     return new Container(
       width: 100.0,
       height: 100.0,
       alignment: Alignment.center,
       decoration: new BoxDecoration(
-
         image: DecorationImage(
-            image: AssetImage('images/em5.png'),
-            fit: BoxFit.fill
-        ),
+            image: AssetImage('images/em5.png'), fit: BoxFit.fill),
       ),
     );
   }
 
   //The whole level status area, including the pokemon-go style bar and emoji and balance due date
   Widget levelStatus() {
-    return Row(children: [
-      createCircularChart(),
-      createEmoji(5)
-    ]);
+    return Row(children: [createCircularChart(), createEmoji(5)]);
   }
 
   //The user information, including available cash, payment due, and paycheck due
@@ -159,7 +186,7 @@ class FrontPageState extends State<FrontPage> {
             alignment: Alignment.centerLeft,
             child: Container(
               child: Text(
-                "Payment Due: ",
+                "Payment Due: $paymentDue",
                 style: TextStyle(
                   fontSize: fontSize,
                 ),
@@ -170,7 +197,7 @@ class FrontPageState extends State<FrontPage> {
             alignment: Alignment.centerLeft,
             child: Container(
               child: Text(
-                "Paycheck: ",
+                "Amount Spent: \$$balance $maxExp $currentExp",
                 style: TextStyle(
                   fontSize: fontSize,
                 ),
@@ -184,7 +211,7 @@ class FrontPageState extends State<FrontPage> {
 
   //The payment button
   Widget payButton() {
-    return new RaisedButton (
+    return new RaisedButton(
       child: Text('Pay'),
       onPressed: () {
         // Navigate to second screen when tapped!
@@ -212,12 +239,10 @@ class FrontPageState extends State<FrontPage> {
       appBar: AppBar(
         title: Text('KapitalKidz'),
       ),
-
       drawer: hamburger(),
       body: widgetList(),
     );
   }
-
 
   Widget widgetList() {
     return new Padding(
@@ -230,5 +255,4 @@ class FrontPageState extends State<FrontPage> {
           payButton()
         ]));
   }
-
 }
