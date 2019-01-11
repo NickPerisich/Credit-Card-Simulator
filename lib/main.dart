@@ -147,7 +147,7 @@ class FrontPageState extends State<FrontPage> {
         ),
         new CircularSegmentEntry(
           50 - (currentExp / maxExp * 50),
-          Colors.grey[600],
+          Colors.grey[200],
           rankKey: 'remaining',
         ),
       ],
@@ -156,18 +156,16 @@ class FrontPageState extends State<FrontPage> {
   }
 
   Widget createCircularChart() {
-    return new AnimatedCircularChart(
+    return RotatedBox(
+      quarterTurns: -1,
+      child: new AnimatedCircularChart(
         key: _chartKey,
-        size: Size(200, 200),
+        size: Size(400, 400),
         initialChartData: createChartData(),
         chartType: CircularChartType.Radial,
         percentageValues: true,
-        holeLabel: 'Level 5',
-        labelStyle: new TextStyle(
-          color: Colors.blueGrey[600],
-          fontWeight: FontWeight.bold,
-          fontSize: 30.0,
-        ));
+        edgeStyle: SegmentEdgeStyle.round
+    ));
   }
 
   Widget createEmoji(int _level) {
@@ -184,7 +182,16 @@ class FrontPageState extends State<FrontPage> {
 
   //The whole level status area, including the pokemon-go style bar and emoji and balance due date
   Widget levelStatus() {
-    return Row(children: [createCircularChart(), createEmoji(5)]);
+    return new Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        createCircularChart(),
+        Positioned(
+          child: createEmoji(level),
+          top: 110
+        )
+      ],
+    );
   }
 
   //The user information, including available cash, payment due, and paycheck due
