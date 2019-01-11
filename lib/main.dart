@@ -146,7 +146,7 @@ Widget hamburger() {
   //The logo seen
   Widget logo() {
     return Container(
-      child: Image.asset('images/cap1logo.png'),
+      child: Image.asset('images/kkidz.png'),
       // ...
     );
   }
