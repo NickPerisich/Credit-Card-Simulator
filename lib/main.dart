@@ -392,7 +392,13 @@ Widget hamburger() {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Capital One Allowance'),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('images/logo_classic.png',fit: BoxFit.cover),
+        ),
+        centerTitle: true
       ),
       drawer: hamburger(),
       body: widgetList(),
@@ -403,7 +409,6 @@ Widget hamburger() {
     return new Padding(
         padding: const EdgeInsets.only(left: 8, right: 8),
         child: ListView(children: [
-          logo(),
           levelStatus(),
           creditBar(),
           amountSpent(),
