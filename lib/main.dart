@@ -132,15 +132,9 @@ Widget hamburger() {
         child: new ListView(
       children: <Widget>[
         new DrawerHeader(
-          child: new Text(
-            'Capital One Allowance',
-            style: TextStyle(
-              fontStyle: FontStyle.normal,
-              color: Colors.white,
-            )
-          ),
-          decoration: BoxDecoration (
-            color: Colors.lightBlue,
+          child: Image(
+            image: AssetImage("images/kkidz.png"),
+            fit: BoxFit.cover,
           ),
         ),
         new ListTile(
