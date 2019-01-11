@@ -250,6 +250,20 @@ class FrontPageState extends State<FrontPage> {
     );
   }
 
+  //The payment button
+  Widget parentButton() {
+    return new RaisedButton(
+      child: Text('Parental Controls'),
+      onPressed: () {
+        // Navigate to second screen when tapped!
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ParentSettingsScreen()),
+        );
+      },
+    );
+  }
+
   Widget creditBar() {
     return Column(children: [
       Row(
@@ -282,7 +296,8 @@ class FrontPageState extends State<FrontPage> {
           levelStatus(),
           creditBar(),
           userCashInfo(),
-          payButton()
+          payButton(),
+          parentButton()
         ]));
   }
 }
