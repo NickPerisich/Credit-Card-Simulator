@@ -17,6 +17,10 @@ int currentExp;
 int level;
 int maxExp;
 int minPayment;
+String name;
+int parentalPasscode;
+int allowanceAmount;
+int limit;
 
 void main() => runApp(MyApp());
 final GlobalKey<AnimatedCircularChartState> _chartKey =
@@ -41,6 +45,21 @@ class FrontPageState extends State<FrontPage> {
   @override
   void initState() {
     super.initState();
+    userReference.child('parental-asscode').onValue.listen((Event event) {
+      setState(() {
+        parentalPasscode = event.snapshot.value as int;
+      });
+    });
+    userReference.child('parental-passcode').onValue.listen((Event event) {
+      setState(() {
+        parentalPasscode = event.snapshot.value as int;
+      });
+    });
+    userReference.child('name').onValue.listen((Event event) {
+      setState(() {
+        name = event.snapshot.value.toString();
+      });
+    });
     userReference.child('cash').onValue.listen((Event event) {
       setState(() {
         cash = event.snapshot.value as int;
@@ -74,6 +93,11 @@ class FrontPageState extends State<FrontPage> {
     userReference.child('minimum_payment').onValue.listen((Event event) {
       setState(() {
         minPayment = event.snapshot.value as int;
+      });
+    });
+    userReference.child('limit').onValue.listen((Event event) {
+      setState(() {
+        limit = event.snapshot.value as int;
       });
     });
   }
@@ -197,7 +221,7 @@ class FrontPageState extends State<FrontPage> {
             alignment: Alignment.centerLeft,
             child: Container(
               child: Text(
-                "Amount Spent: \$$balance $maxExp $currentExp",
+                "Amount Spent: \$$balance",
                 style: TextStyle(
                   fontSize: fontSize,
                 ),
@@ -226,9 +250,9 @@ class FrontPageState extends State<FrontPage> {
   Widget creditBar() {
     return Container(
       child: LinearProgressIndicator(
-        value: 0.3,
-        backgroundColor: Colors.red,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+        value: / limit,
+        backgroundColor: Colors.green,
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
       ),
     );
   }
