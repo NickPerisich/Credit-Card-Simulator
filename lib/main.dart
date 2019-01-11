@@ -186,12 +186,12 @@ Widget hamburger() {
     return [new CircularStackEntry(
       <CircularSegmentEntry>[
         new CircularSegmentEntry(
-          (currentExp / maxExp * 50),
+          (currentExp / maxExp * 100),
           Colors.lightGreen[400],
           rankKey: 'completed',
         ),
         new CircularSegmentEntry(
-          50 - (currentExp / maxExp * 50),
+          100 - (currentExp / maxExp * 100),
           Colors.grey[200],
           rankKey: 'remaining',
         ),
@@ -201,22 +201,20 @@ Widget hamburger() {
   }
 
   Widget createCircularChart() {
-    return RotatedBox(
-      quarterTurns: -1,
-      child: new AnimatedCircularChart(
-        key: _chartKey,
-        size: Size(400, 400),
-        initialChartData: createChartData(),
-        chartType: CircularChartType.Radial,
-        percentageValues: true,
-        edgeStyle: SegmentEdgeStyle.round
-    ));
+    return new AnimatedCircularChart(
+      key: _chartKey,
+      size: Size(400, 400),
+      initialChartData: createChartData(),
+      chartType: CircularChartType.Radial,
+      percentageValues: true,
+      edgeStyle: SegmentEdgeStyle.round
+    );
   }
 
   Widget createEmoji(int _level) {
     return new Container(
-      width: 100.0,
-      height: 100.0,
+      width: 150.0,
+      height: 150.0,
       alignment: Alignment.center,
       decoration: new BoxDecoration(
         image: DecorationImage(
@@ -231,10 +229,17 @@ Widget hamburger() {
       alignment: Alignment.center,
       children: <Widget>[
         createCircularChart(),
-        Positioned(
-          child: createEmoji(level),
-          top: 110
-        )
+        Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Text("Level $level",
+                style: TextStyle(fontSize: 36)
+              ),
+            ),
+            createEmoji(level),
+          ],
+        ),
       ],
     );
   }
@@ -414,6 +419,13 @@ Widget hamburger() {
     return new Padding(
         padding: const EdgeInsets.only(left: 8, right: 8),
         child: ListView(children: [
+          Center(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(0, 30, 0, 20),
+              child: Text("Howdy, $name",
+              style: TextStyle(fontSize: 48),),
+            ),
+          ),
           levelStatus(),
           creditBar(),
           amountSpent(),
