@@ -11,6 +11,7 @@ final databaseReference = FirebaseDatabase.instance.reference();
 final userReference = databaseReference.child('0');
 
 int cash;
+int penalty;
 int paymentDue = 0;
 int balance = 0;
 int currentExp;
@@ -45,7 +46,12 @@ class FrontPageState extends State<FrontPage> {
   @override
   void initState() {
     super.initState();
-    userReference.child('parental-passcode').onValue.listen((Event event) {
+    userReference.child('penalty').onValue.listen((Event event) {
+      setState(() {
+        penalty = event.snapshot.value as int;
+      });
+    });
+    userReference.child('parental_passcode').onValue.listen((Event event) {
       setState(() {
         parentalPasscode = event.snapshot.value as int;
       });
@@ -218,7 +224,7 @@ class FrontPageState extends State<FrontPage> {
             alignment: Alignment.centerLeft,
             child: Container(
               child: Text(
-                "Payment Due: " + date.day.toString() + "/" + date.month.toString() + "/" + date.year.toString(),
+                "Payment Due: " + date.month.toString() + "/" + date.day.toString() + "/" + date.year.toString(),
                 style: TextStyle(
                   fontSize: fontSize,
                 ),
