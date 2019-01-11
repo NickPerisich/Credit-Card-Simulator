@@ -104,7 +104,7 @@ class FrontPageState extends State<FrontPage> {
     });
   }
 
-  Widget hamburger() {
+Widget hamburger() {
     return new Drawer(
         child: new ListView(
       children: <Widget>[
@@ -146,7 +146,7 @@ class FrontPageState extends State<FrontPage> {
   //The logo seen
   Widget logo() {
     return Container(
-      child: Image.asset('images/kkidz.png'),
+      child: Image.asset('images/cap1logo.png'),
       // ...
     );
   }

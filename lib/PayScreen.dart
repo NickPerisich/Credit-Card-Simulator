@@ -25,6 +25,7 @@ class PayScreen extends StatefulWidget {
 class PayScreenState extends State<PayScreen> {
   int cashAmount = cash;
   int balanceAmount = balance;
+  bool toggleDialog = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,31 +35,70 @@ class PayScreenState extends State<PayScreen> {
       body: widgetList(),
     );
   }
-  Widget amountOwedCard(cashBalance, creditAmount) {
+
+  Widget cashBalCard(cashBalance, creditAmount) {
     //int balance = 100;
     //int amountOwed = 5;
     return new Card(
       child: Column(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.payment),
+            leading: Icon(Icons.attach_money),
             // ignore: const_eval_throws_exception
-            title: Text("You have $cash\nYou owe a balance of $creditAmount\n", style: TextStyle(fontSize: 32),),
+            title: Padding(
+            padding: EdgeInsets.all(16.0),
+              child: Text(
+                "You have \$$cash dollars in your account",
+                style: TextStyle(fontSize: 24),
+                textAlign: TextAlign.center,
+              ),
+            )
           ),
         ],
       ),
     );
   }
 
+  Widget amountOwedCard(cashBalance, creditAmount) {
+    //int balance = 100;
+    //int amountOwed = 5;
+      return new Card(
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.payment),
+              // ignore: const_eval_throws_exception
+              title: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                "You owe a balance of \$$creditAmount",
+                style: TextStyle(fontSize: 24),
+                textAlign: TextAlign.center,
+              ),
+              )
+            ),
+          ],
+        ),
+      );
+  }
+
   Widget payButton() {
-    return new RaisedButton (
-      child: Text('Pay'),
-      onPressed: () {
-        handleButtonPress();
-        //userReference.child("balance").set(balance);
-        // userReference.child("cash").set((cash-balance));
-      },
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+    return new Padding(
+        padding: EdgeInsets.all(16),
+        child: RaisedButton (
+          child: Text('Pay', style: TextStyle(fontSize: 20),),
+          onPressed: () {
+            handleButtonPress();
+            toggleDialogFunction();
+          },
+          shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+        ),
+    );
+  }
+
+  Widget paymentConfirmDialog() {
+    return new Dialog(
+      child: Text("This is a dialog"),
     );
   }
 
@@ -85,10 +125,13 @@ class PayScreenState extends State<PayScreen> {
         userReference.child('balance').set(balance);
       }
     });
-    print("balance is $balance");
-    print("cash is $cash");
   }
 
+  void toggleDialogFunction() {
+    setState(() {
+      toggleDialog = !toggleDialog;
+    });
+  }
 
 /*
   void setCashState() {
@@ -105,6 +148,7 @@ class PayScreenState extends State<PayScreen> {
     return new Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(children: [
+          cashBalCard(cash, balance),
           amountOwedCard(cash, balance),
           payButton()
         ]));
