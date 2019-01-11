@@ -109,8 +109,9 @@ class FrontPageState extends State<FrontPage> {
         child: new ListView(
       children: <Widget>[
         new DrawerHeader(
-          child: new Text('Header'),
+          child: new Text('Kapital Kidz'),
         ),
+        /*
         new ListTile(
           title: new Text('Log Out'),
           onTap: () {},
@@ -125,10 +126,12 @@ class FrontPageState extends State<FrontPage> {
             );
           },
         ),
+
         new ListTile(
           title: new Text('Educate Me'),
           onTap: () {},
         ),
+        */
       ],
     ));
   }
@@ -136,7 +139,7 @@ class FrontPageState extends State<FrontPage> {
   //The logo seen
   Widget logo() {
     return Container(
-      child: Image.asset('images/kkidz.png'),
+      child: Image.asset('images/cap1logo.png'),
       // ...
     );
   }
